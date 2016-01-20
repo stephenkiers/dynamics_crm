@@ -26,12 +26,13 @@ module DynamicsCRM
     # Initializes Client instance.
     # Requires: organization_name
     # Optional: hostname
-    def initialize(config={organization_name: nil, hostname: nil, caller_id: nil, login_url: nil, region: nil})
+    def initialize(config={organization_name: nil, hostname: nil, caller_id: nil, login_url: nil, region: nil, https: true})
       raise RuntimeError.new("organization_name or hostname is required") if config[:organization_name].nil? && config[:hostname].nil?
 
       @organization_name = config[:organization_name]
       @hostname = config[:hostname] || "#{@organization_name}.api.crm.dynamics.com"
-      @organization_endpoint = "https://#{@hostname}/XRMServices/2011/Organization.svc"
+      @protocol = config[:https] == true ? 'https' : 'http'
+      @organization_endpoint = "#{@protocol}://#{@hostname}/XRMServices/2011/Organization.svc"
       @caller_id = config[:caller_id]
       @timeout = config[:timeout] || 120
 
