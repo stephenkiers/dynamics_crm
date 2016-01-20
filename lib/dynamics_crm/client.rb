@@ -59,6 +59,7 @@ module DynamicsCRM
       @password = password
 
       auth_request = if on_premise?
+                       byebug
         build_on_premise_request(username, password, region, login_url)
       else
         build_ocp_request(username, password, region, login_url)
