@@ -72,7 +72,9 @@ module DynamicsCRM
       fault_xml = document.get_elements("//[local-name() = 'Fault']")
       raise XML::Fault.new(fault_xml) if fault_xml.any?
 
+      byebug
       if on_premise?
+        byebug
         @security_token0 = document.get_elements("//e:CipherValue").first.text.to_s
         @security_token1 = document.get_elements("//xenc:CipherValue").last.text.to_s
         @key_identifier = document.get_elements("//o:KeyIdentifier").first.text
