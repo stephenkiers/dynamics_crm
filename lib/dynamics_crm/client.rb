@@ -298,6 +298,7 @@ module DynamicsCRM
     end
 
     def login_url
+      byebug
       @login_url ||= if on_premise?
         (organization_wsdl.document.get_elements("//ms-xrm:Identifier").first.text + "/13/usernamemixed").gsub("http://", "https://")
       else
