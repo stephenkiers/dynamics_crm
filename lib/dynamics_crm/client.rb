@@ -59,7 +59,6 @@ module DynamicsCRM
       @password = password
 
       auth_request = if on_premise?
-                       byebug
         build_on_premise_request(username, password, region, login_url)
       else
         build_ocp_request(username, password, region, login_url)
@@ -72,9 +71,7 @@ module DynamicsCRM
       fault_xml = document.get_elements("//[local-name() = 'Fault']")
       raise XML::Fault.new(fault_xml) if fault_xml.any?
 
-      byebug
       if on_premise?
-        byebug
         @security_token0 = document.get_elements("//e:CipherValue").first.text.to_s
         @security_token1 = document.get_elements("//xenc:CipherValue").last.text.to_s
         @key_identifier = document.get_elements("//o:KeyIdentifier").first.text
@@ -300,7 +297,6 @@ module DynamicsCRM
     end
 
     def login_url
-      byebug
       @login_url ||= if on_premise?
         (organization_wsdl.document.get_elements("//ms-xrm:Identifier").first.text + "/13/usernamemixed").gsub("http://", "https://")
       else
@@ -326,7 +322,7 @@ module DynamicsCRM
         "urn:crmna:dynamics.com"
       else
         organization_endpoint
-      end
+    end
     end
 
     def post(url, request)
